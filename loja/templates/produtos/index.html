@@ -1,0 +1,82 @@
+{% extends 'layouts.html' %}
+{% block content %}
+
+<div class="cointainer">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="/">Pagina Inicial</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        
+
+        <li class="nav-item">
+          <a class="nav-link" href="/login">Acesso ao login</a>
+        </li>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% for marca in marcas %}
+            <a class="dropdown-item" href="{{url_for('get_marca', id=marca.id)}}">{{marca.name}}</a>
+            {% endfor %}    
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#"></a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0 col-md-6 ">
+        <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
+      </form>
+        <button class="btn btn-outline-success px-md-5" type="submit">Pesquisar</button>
+      
+    </div>
+  </nav>
+</div>
+<div class="container">
+    <div class="row">
+      {% if marca %}
+      {% for m in marca %}
+      <div class="col-md-3">
+          <div class ="card ">
+              <img src="{{url_for('static', filename='images/' + m.image_1)}}" alt="{{m.name}}" class="card-img-top" height ="400">
+              <div class="card-body font-weight:400">
+                {% if m.discount > 0 %}
+                <h5 style="text-shadow: 1px 1px 2px #000; color: #f00; position: absolute; top: 78%; left: 30%; font-weight:400;">Desconto {{m.discount}}%</h5>
+                {% endif %}
+                <h4 class="text-center">{{m.name}}</h4>
+                <p class="text-center">Preço R${{m.price}}</p>
+              </div>
+              <div class="card-footer">
+                  <a href='' class="float-left btn btn-sm btn-success">Detalhes do Produto</a>
+                  <a href='#' class="float-right btn btn-sm btn-warning">Comprar</a>
+              </div>
+          </div>
+      </div>
+      {% endfor %}
+      {% else %}
+
+      {% for produto in produtos %}
+        <div class="col-md-3 ">
+            <div class ="card ">
+                <img src="{{url_for('static', filename='images/' + produto.image_1)}}" alt="{{produto.name}}" class="card-img-top" height ="200">
+                <div class="card-body">
+                  {% if produto.discount > 0 %}
+                  <h5 style="text-shadow: 1px 1px 1px #000; position: absolute; top: 78%; left: 30%; font-weight:500;">Desconto {{produto.discount}}%</h5>
+                  {% endif %}
+                  <h4 class="text-center">{{produto.name}}</h4>
+                  <p class="text-center">Preço R${{produto.price}}</p>
+                </div>
+                <div class="card-footer">
+                    <a href= '' class="float-left btn btn-sm btn-success ">Detalhes do Produto </a>
+                    <a href='#' class="float-right btn btn-sm btn-danger">Comprar</a>
+                </div>
+            </div>
+        </div>
+         {% endfor %}
+         {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

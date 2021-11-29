@@ -1,0 +1,56 @@
+{% extends 'layouts.html' %}
+
+{% block content %}
+
+{% include '_messages.html' %}
+
+<div class = "container">
+    <div class="row">
+    <div class = "col-md-2"></div>
+    <div class = "col-md-8 p-2">
+        <h2 class="text-center bg-success p-2">Adicionar dados dos Produtos</h2>
+        {% from "_formularioajuda.html" import render_field %}
+        <form action="" method="POST" enctype="multipart/form-data">
+            {{render_field(form.name, class="form-control", placeholder="Nome do Produto")}}
+            {{render_field(form.price, class="form-control", placeholder="Preço do Produto")}}
+            {{render_field(form.discount, class="form-control", placeholder="Desconto do Produto")}}
+            {{render_field(form.stock, class="form-control", placeholder="Estoque do Produto")}}
+            
+            <label for="marca">Selecione um produto</label>
+            <select name="marca" id="marca" class="form-control" required>
+                <option value="">Selecione um produto</option>
+                {% for marca in marcas %}
+                <option value="{{marca.id}}">{{marca.name}}</option>
+                {% endfor %}
+            </select>
+
+
+            <label for="categoria">Selecione uma Categoria de Produtos</label>
+            <select name="categoria" id="categoria" class="form-control" required>
+                <option value="">Selecione uma Categoria</option>
+                {% for categoria in categorias %}
+                <option value="{{categoria.id}}">{{categoria.name}}</option>
+                {% endfor %}
+            </select>
+
+            {{render_field(form.colors, class="form-control", placeholder="Cor da Imagem")}}
+            {{render_field(form.discription, class="form-control", placeholder="Descrição do Produto",rows="10")}}
+
+            <div class = "container">
+                <div class = "row">
+                    <div class="col-md-4">{{ render_field(form.image_1, class="form-control")}}</div>
+                    <div class="col-md-4">{{ render_field(form.image_2, class="form-control")}}</div>
+                    <div class="col-md-4">{{ render_field(form.image_3, class="form-control")}}</div>
+            
+                </div>   
+            </div>
+            <button type="submit" class="btn btn-outline-info mt-4">Cadastrar</button>
+        </form>
+            <a class="btn btn-danger" style="margin-top: -62px; margin-left: 145px;" href="{{url_for('admin')}}">Cancelar</a>
+
+    </div>
+    <div class="col-md-2"></div>
+</div>
+</div>
+
+{% endblock content %}

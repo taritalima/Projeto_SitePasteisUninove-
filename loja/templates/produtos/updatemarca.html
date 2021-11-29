@@ -1,0 +1,31 @@
+{% extends "layouts.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {% include "_messages.html" %}
+            {% if updatemarca %}
+            <h2 class="text-center mt-5"> Cadastrar Produtos</h2>
+            <form action="" method="POST">
+                <input type="text" name="marca" class="form-control" value="{{updatemarca.name}}">
+                <input type="submit" value="Atualizar Fabricante" class="btn btn-success mt-2">
+            </form>
+            <a href="{{url_for('marcas')}}" class="btn btn-danger" style="margin-top:-65px; margin-left:180px">Cancelar</a>
+            {% else %}
+            <h2 class="text-center mt-5"> Cadastrar Categorias de Produtos</h2>
+            <form action="" method="POST">
+                <input type="text" name="categoria" class="form-control" value="{{updatecat.name}}">
+                <input type="submit" value="Atualizar categoria" class="btn btn-success mt-2">
+            </form>
+            <a href="{{url_for('categoria')}}" class="btn btn-danger" style="margin-top:-65px; margin-left:180px">Cancelar</a>
+
+            {% endif %}
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+{% endblock content %}

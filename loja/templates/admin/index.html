@@ -1,0 +1,91 @@
+{% extends 'layouts.html' %}
+{% block content %}
+
+<div class="cointainer">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{url_for('admin')}}">Administrador</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{url_for('admin')}}">Dados dos Produtos</a>
+           </li>
+           <li class="nav-item">
+              <a class="nav-link" href="{{url_for('marcas')}}">Produtos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('categoria')}}">Categorias dos Produtos</a>
+          </li>
+          <li class="nav-item dropdown">
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{{url_for('addproduto')}}">Adicionar Dados dos Produtos</a></li>
+              <li><a class="dropdown-item" href="{{url_for('addmarca')}}">Adicionar Produtos</a></li>
+              <li><a class="dropdown-item" href="{{url_for('addcat')}}">Adicionar Categorias de Produtos</a></li>
+            </div>
+          </li>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="cointainer mt-3">
+    <table class= "table table-sm table-striped">
+        <thead>
+            <th>Serial</th>    
+            <th>Produto</th>    
+            <th>Preço</th>    
+            <th>Desconto</th>    
+            <th>Dados dos Produtos</th>    
+            <th>Foto</th>    
+            <th>Editar</th>    
+            <th>Deletar</th>    
+        </thead>
+
+        <tbody>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{produto.name}}</td>
+                <td>{{produto.price}}</td>
+                <td>{{produto.discount}}%</td>
+                <td>{{produto.marca.name}}</td>
+                <td><img src="{{url_for('static', filename='images/' + produto.image_1)}}" width="50" height="40"></td>
+                <td><a href="{{url_for('updateproduto', id=produto.id)}}" class="btn btn-success btn-sm">Editar</a></td>
+                <td>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal-{{produto.id}}">
+                  Deletar
+                </button>
+                </td>
+            </tr>
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal-{{produto.name}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{produto.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class = "text-danger">DESEJA REALMENTE DELETAR ESSE PRODUTO? {{produto.name}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">Cancelar</button>
+        <form action ="{{url_for('addproduto', id=produto.id)}}" method="POST">  
+          <button type="submit" class="btn btn-danger">Deletar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
